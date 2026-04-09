@@ -17,6 +17,7 @@ import sys
 import json
 import itertools
 import warnings
+from typing import List
 from pathlib import Path
 from copy import deepcopy
 
@@ -51,7 +52,7 @@ np.random.seed(RANDOM_SEED)
 # ─────────────────────────────────────────────────────────────────
 # 헬퍼: 공간 다양성 기반 포즈 선택 (Farthest Point Sampling)
 # ─────────────────────────────────────────────────────────────────
-def fps_pose_indices(data: pd.DataFrame, n: int) -> list[int]:
+def fps_pose_indices(data: pd.DataFrame, n: int) -> List[int]:
     """
     로봇 xyz 공간에서 Farthest Point Sampling 으로
     공간적으로 고르게 분포된 n 개 포즈의 인덱스를 반환.
@@ -244,11 +245,18 @@ def run_kfold_by_n(base_calib: HandEyeCalibration) -> pd.DataFrame:
 
 
 def _ncr(n, r):
-    """조합 수 C(n,r) – 폭발 방지용 상한 계산."""
-    from math import comb
+    """조합 수 C(n,r) – Python 3.7 호환 버전."""
+    import math
+
     try:
-        return comb(n, r)
+        r = min(r, n - r)
+        numerator = 1
+        for i in range(r):
+            numerator *= (n - i)
+        denominator = math.factorial(r)
+        return numerator // denominator
     except Exception:
+        # overflow 또는 기타 문제 시 cap
         return MAX_COMBINATIONS_PER_N + 1
 
 
