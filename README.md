@@ -2,7 +2,6 @@
 
 이 프로젝트는 Hand-Eye Calibration에서 **최소 몇 개의 포즈가 있어야 안정적인 성능을 얻는지**를 검증하는 실험 코드입니다.
 
----
 
 ## 1. 목표
 
@@ -11,7 +10,6 @@
 - Position error < 1 mm
 - Rotation error < 1 deg
 
----
 
 ## 2. 핵심 질문
 
@@ -39,7 +37,6 @@
 
 👉 목적: 포즈 조합에 따른 성능 비교
 
----
 
 ## 4. 평가 지표
 
@@ -50,14 +47,12 @@
 - rot_mean: 평균 회전 오차 (deg)
 - rot_max: 최대 회전 오차 (deg)
 
----
 
 ## 5. PASS 기준
 
 다음 조건을 만족하면 PASS:
 pos_mean < 1.0 mm AND rot_mean < 1.0 deg
 
----
 
 ## 6. 실행 방법
 
